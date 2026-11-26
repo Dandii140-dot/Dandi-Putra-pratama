@@ -162,28 +162,42 @@
         <a href="#informasi">Informasi</a>
     </nav>
 
-    <audio id="musik" loop>
-        <source src="Cinta - Keyshia Cole.mp3 (1).m4a" type ="audio/mp4">
-        </audio>
+    <!-- Pemutar TikTok -->
+    <iframe
+        id="musikTikTok"
+        src="https://vt.tiktok.com/ZSsr8LcpB/v1/ID_VIDEO_TIKTOK?controls=1&music_info=1&loop=1"
+        width="325"
+        height="580"
+        allow="fullscreen"
+        title="Musik TikTok">
+    </iframe>
+
+    <br>
+
+    <!-- Tombol musik -->
     <button onclick="toggleMusik()" id="tombolMusik">
-    🔇 
-</button>
+        🔊
+    </button>
 
-<script>
-function toggleMusik() {
-    const musik = document.getElementById("musik");
-    const tombol = document.getElementById("tombolMusik");
+    <script>
+    let musikAktif = false;
 
-    if (musik.paused) {
-        musik.play();
-        tombol.innerHTML = "🔇";
-    } else {
-        musik.pause();
-        tombol.innerHTML = "🔊 ";
+    function toggleMusik() {
+        const player = document.getElementById("musikTikTok");
+        const tombol = document.getElementById("tombolMusik");
+
+        const perintah = musikAktif ? "pause" : "play";
+
+        player.contentWindow.postMessage({
+            "x-tiktok-player": true,
+            "type": perintah
+        }, "https://www.tiktok.com");
+
+        musikAktif = !musikAktif;
+
+        tombol.innerHTML = musikAktif ? "🔊" : "🔇";
     }
-}
-</script>
-    
+    </script>
     <!-- BERANDA -->
     <section id="beranda">
         <h2>Selamat Datang</h2>
